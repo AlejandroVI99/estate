@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="estate_property_action" model="ir.actions.act_window">
+      <field name="name">Properties</field>
+      <field name="res_model">estate.property</field>
+      <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="estate_property_view_tree" model="ir.ui.view">
+      <field name="name">estate.property.tree</field>
+      <field name="model">estate.property</field>
+      <field name="arch" type="xml">
+          <tree>
+              <field string ='Title' name="name"/>
+              <field name="postcode"/>
+              <field name="bedrooms"/>
+              <field string ='Living Area (sqm)' name="living_area"/>
+              <field name="expected_price"/>
+              <field name="selling_price"/>
+              <field string ='Available From' name="date_availability"/>
+          </tree>
+      </field>
+  </record>
+
+  <record id="estate_property_view_form" model="ir.ui.view">
+      <field name="name">estate.property.form</field>
+      <field name="model">estate.property</field>
+      <field name="arch" type="xml">
+        <form string="Test">
+            <sheet>
+                <div>
+                  <h1 class="mb32">
+                      <field name="name" class="mb16"/>
+                  </h1>
+                </div>
+                <div class="col-md-6">
+                  <group>
+                      <field name="tag_ids" widget="many2many_tags"/>
+                  </group>
+                </div>
+                <div style="display: flex;">
+                  <div>
+                    <div>
+                      <label for="property_type_id"/>
+                      <field name="property_type_id" class="mb16"/>
+                    </div>
+                    <div>
+                      <label for="postcode"/>
+                      <field name="postcode" class="mb16"/>
+                    </div>
+                    <div>
+                      <label for="date_availability"/>
+                      <field name="date_availability" class="mb16"/>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <label for="expected_price"/>
+                      <field name="expected_price" class="mb16"/>
+                    </div>
+                    <div>
+                      <label for="selling_price"/>
+                      <field name="selling_price" class="mb16"/>
+                    </div>
+                  </div>
+                </div>
+                <notebook>
+                  <page string="Description">
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="description"/>
+                      </div>
+                      <div>
+                        <field name="description" style="width: 30vw;"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label string="Living Area (sqm)" for="living_area"/>
+                      </div>
+                      <div>
+                        <field name="living_area" class="mb16"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="facades"/>
+                      </div>
+                      <div>
+                        <field name="facades" class="mb16"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="garage"/>
+                      </div>
+                      <div style="width: 120px">
+                        <field name="garage" class="mb16"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="garden"/>
+                      </div>
+                      <div>
+                        <field name="garden" class="mb16"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label string="Garden Area (sqm)" for="garden_area"/>
+                      </div>
+                      <div>
+                        <field name="garden_area" class="mb16"/>
+                      </div>
+                    </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="garden_orientation"/>
+                      </div>
+                      <div>
+                        <field name="garden_orientation" class="mb16"/>
+                      </div>
+                    </div>
+                  </page>
+                  <page string="Offers">
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="offer_ids"/>
+                      </div>
+                      <div>
+                        <field name="offer_ids" style="width: 30vw;"/>
+                      </div>
+                    </div>
+                  </page>
+                  <page string="Other Info">
+                    <div style="display: flex;">
+                      <div style="width: 110px">
+                        <label for="user_id"/>
+                      </div>
+                      <div>
+                        <field name="user_id" style="width: 30vw;"/>
+                      </div>
+                      <div style="width: 110px">
+                        <label for="partner_id"/>
+                      </div>
+                      <div>
+                        <field name="partner_id" style="width: 30vw;"/>
+                      </div>
+                    </div>
+                  </page>
+                </notebook>
+            </sheet>
+        </form>
+      </field>
+  </record>
+
+  <record id="estate_property_view_search" model="ir.ui.view">
+      <field name="name">estate.property.search</field>
+      <field name="model">estate.property</field>
+      <field name="arch" type="xml">
+          <search string="Estate Property">
+              <field name="name" string="Title"/>
+              <field name="postcode"/>
+              <field name="expected_price"/>
+              <field name="bedrooms"/>
+              <field string ='Living Area (sqm)' name="living_area"/>
+              <field name="facades"/>
+              <filter string="Available" name="date_availability" domain="['|',('state', '=', 'new'),('state', '=', 'offer received')]"/>
+          </search>
+      </field>
+  </record>
+</odoo>
