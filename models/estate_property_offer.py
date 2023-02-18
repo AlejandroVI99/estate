@@ -53,5 +53,3 @@ class EstatePropertyOffer(models.Model):
         record.validity = (record.date_deadline - record.create_date.date()).days
       else:
         record.validity = (record.date_deadline - fields.Date.today()).days
-
-
