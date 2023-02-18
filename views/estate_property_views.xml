@@ -27,6 +27,10 @@
       <field name="model">estate.property</field>
       <field name="arch" type="xml">
         <form string="Test">
+            <header>
+              <button name="action_sold_property" type="object" string="Sold"/>
+              <button name="action_cancel_property" type="object" string="Cancel"/>
+            </header>
             <sheet>
                 <div>
                   <h1 class="mb32">
@@ -36,6 +40,7 @@
                 <div class="col-md-6">
                   <group>
                       <field name="tag_ids" widget="many2many_tags"/>
+                      <field name="state" class="mb16"/>
                   </group>
                 </div>
                 <div style="display: flex;">
@@ -57,6 +62,10 @@
                     <div>
                       <label for="expected_price"/>
                       <field name="expected_price" class="mb16"/>
+                    </div>
+                    <div>
+                      <label for="best_price"/>
+                      <field name="best_price" class="mb16"/>
                     </div>
                     <div>
                       <label for="selling_price"/>
@@ -122,14 +131,19 @@
                         <field name="garden_orientation" class="mb16"/>
                       </div>
                     </div>
+                    <div style="display: flex;">
+                      <div style="width: 120px">
+                        <label for="total_area"/>
+                      </div>
+                      <div>
+                        <field name="total_area" class="mb16"/>
+                      </div>
+                    </div>
                   </page>
                   <page string="Offers">
                     <div style="display: flex;">
-                      <div style="width: 120px">
-                        <label for="offer_ids"/>
-                      </div>
                       <div>
-                        <field name="offer_ids" style="width: 30vw;"/>
+                        <field name="offer_ids"/>
                       </div>
                     </div>
                   </page>
