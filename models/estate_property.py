@@ -5,6 +5,7 @@ from odoo.tools import float_compare, float_is_zero
 class EstateProperty(models.Model):
   _name = "estate.property"
   _description = "Test Model"
+  _order = "id desc"
 
   name = fields.Char(required = True)
   description = fields.Text()
@@ -31,8 +32,8 @@ class EstateProperty(models.Model):
     string = "State",
     selection = [
       ("new", "New"),
-      ("offer received", "Offer Received"),
-      ("offer accepted", "Offer Accepted"),
+      ("offer_received", "Offer Received"),
+      ("offer_accepted", "Offer Accepted"),
       ("sold", "Sold"),
       ("canceled", "Canceled")],
     copy = False,
@@ -48,18 +49,20 @@ class EstateProperty(models.Model):
   offer_ids = fields.One2many("estate.property.offer", "property_id")
   total_area = fields.Float(compute = "_compute_total_area")
   best_price = fields.Float(compute = "_compute_best_price")
-
+  property_type_id = fields.Many2one("estate.property.type")
+  
   #public methods
   def action_sold_property(self):
     if self.state != "canceled":
       self.state = "sold"
     else:
-      raise exceptions.UserError("Canceled properties cannot be sold")
+      raise UserError("Canceled properties cannot be sold")
+
   def action_cancel_property(self):
     if self.state != "sold":
       self.state = "canceled"
     else:
-      raise exceptions.UserError("Sold properties cannot be canceled")
+      raise UserError("Sold properties cannot be canceled")
 
   #private methods
 

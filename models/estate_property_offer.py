@@ -1,11 +1,12 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, exceptions
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError, UserError
 
 class EstatePropertyOffer(models.Model):
   _name = "estate.property.offer"
   _description = "Property Offer Model"
+  _order = "price desc"
 
   price = fields.Float()
   status = fields.Selection(
@@ -19,6 +20,7 @@ class EstatePropertyOffer(models.Model):
     compute = "_compute_date_deadline",
     inverse = "_inverse_date_deadline"
   )
+  property_type_id = fields.Many2one("estate.property.type")\
 
   _sql_constraints = [
     ("property_offer_price",
@@ -32,8 +34,9 @@ class EstatePropertyOffer(models.Model):
       self.status = "accepted"
       self.property_id.partner_id = self.partner_id.id
       self.property_id.selling_price = self.price
+      self.property_id.state = "offer_accepted"
     else:
-      raise exceptions.UserError("Property has already a Buyer")
+      raise UserError("Property has already a Buyer")
 
   def action_refuse_offer(self):
     self.status = "refused"
