@@ -51,6 +51,12 @@ class EstateProperty(models.Model):
   best_price = fields.Float(compute = "_compute_best_price")
   property_type_id = fields.Many2one("estate.property.type")
   
+
+  @api.ondelete(at_uninstall=False)
+  def _check_property_state(self):
+    if self.state in ("sold","offer_received","offer_accepted"):
+      raise UserError("Property cannot be delete")
+
   #public methods
   def action_sold_property(self):
     if self.state != "canceled":

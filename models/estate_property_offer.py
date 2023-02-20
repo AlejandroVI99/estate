@@ -14,19 +14,32 @@ class EstatePropertyOffer(models.Model):
     selection = [("accepted", "Accepted"), ("refused","Refused")]
   )
   partner_id = fields.Many2one("res.partner", string = "Buyer", required = True)
-  property_id = fields.Many2one("estate.property", required = True)
+  property_id = fields.Many2one("estate.property", required = True, ondelete="cascade")
   validity = fields.Integer(default = 7)
   date_deadline = fields.Date(
     compute = "_compute_date_deadline",
     inverse = "_inverse_date_deadline"
   )
-  property_type_id = fields.Many2one("estate.property.type")\
+  property_type_id = fields.Many2one("estate.property.type")
 
   _sql_constraints = [
     ("property_offer_price",
     "CHECK(price > 0)",
     "Tag name alredy exists")
   ]
+
+  @api.model
+  def create(self, vals):
+    property_record = self.env["estate.property"].browse(vals["property_id"])
+
+    if property_record.offer_ids:
+      if vals.get("price") > max(property_record.offer_ids.mapped("price")):
+        return super(EstatePropertyOffer, self).create(vals)
+      else:
+        raise UserError("offer is lower than an existing offer")
+    else:
+      property_record.state = "offer_received"
+      return super(EstatePropertyOffer, self).create(vals)
 
   #public methods
   def action_accept_offer(self):
