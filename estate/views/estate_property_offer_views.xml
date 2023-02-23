@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<odoo>
+
+  <record id="estate_property_offer_view_tree" model="ir.ui.view">
+    <field name="name">estate.property.offer.tree</field>
+    <field name="model">estate.property.offer</field>
+    <field name="arch" type="xml">
+      <tree
+                string="Channel"
+                editable="bottom"
+                decoration-success="status=='accepted'"
+                decoration-danger="status=='refused'"
+            >
+        <field name="price" />
+        <field name="partner_id" />
+        <field name="status" invisible="1" />
+        <field name="validity" />
+        <field name="date_deadline" />
+        <button
+                    icon="fa-check"
+                    name="action_accept_offer"
+                    string="Accept"
+                    type="object"
+                    attrs="{'invisible': ['|', ('status', '=','accepted'), ('status', '=','refused')]}"
+                />
+        <button
+                    icon="fa-times"
+                    name="action_refuse_offer"
+                    string="Refuse"
+                    type="object"
+                    attrs="{'invisible': ['|', ('status', '=','accepted'), ('status', '=','refused')]}"
+                />
+      </tree>
+    </field>
+  </record>
+
+  <record id="estate_property_offer_view_form" model="ir.ui.view">
+    <field name="name">estate.property.offer.form</field>
+    <field name="model">estate.property.offer</field>
+    <field name="arch" type="xml">
+      <form string="Test">
+        <sheet>
+          <div>
+            <label for="price" />
+            <field class="mb16" name="price" />
+          </div>
+          <div>
+            <label for="partner_id" />
+            <field class="mb16" name="partner_id" />
+          </div>
+          <div>
+            <label for="status" />
+            <field class="mb16" name="status" />
+          </div>
+          <div>
+            <label for="validity" />
+            <field class="mb16" name="validity" />
+          </div>
+          <div>
+            <label for="date_deadline" />
+            <field class="mb16" name="date_deadline" />
+          </div>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="estate_property_offer_action" model="ir.actions.act_window">
+    <field name="name">Offers</field>
+    <field name="res_model">estate.property.offer</field>
+    <field name="domain">[('property_type_id', '=', active_id)]</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+</odoo>
