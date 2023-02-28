@@ -65,6 +65,10 @@
           <div style="display: flex;">
             <div>
               <div>
+                <label for="company_id" />
+                <field class="mb16" name="company_id" />
+              </div>
+              <div>
                 <label for="property_type_id" />
                 <field class="mb16" name="property_type_id" options="{'no_create': True}" />
               </div>

@@ -7,6 +7,7 @@ class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Test Model"
     _order = "id desc"
+    _check_company_auto = True
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -37,13 +38,14 @@ class EstateProperty(models.Model):
         default="new",
     )
     property_type_id = fields.Many2one("estate.property.type")
-    user_id = fields.Many2one("res.users", string="Salesperson", index=True, default=lambda self: self.env.user)
+    user_id = fields.Many2one("res.users", string="Salesperson")
     partner_id = fields.Many2one("res.partner", string="Buyer")
     tag_ids = fields.Many2many("estate.property.tag")
     offer_ids = fields.One2many("estate.property.offer", "property_id")
     total_area = fields.Float(compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
     property_type_id = fields.Many2one("estate.property.type")
+    company_id = fields.Many2one("res.company", required=True, default=lambda self: self.env.company)
 
     @api.ondelete(at_uninstall=False)
     def _check_property_state(self):
