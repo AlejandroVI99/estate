@@ -26,21 +26,21 @@
         <sheet>
           <group>
             <button type="action" name="%(estate.estate_property_offer_action)d" string="Offers">
-              <field class="mb16" name="offer_count"/>
+              <field class="mb16" name="offer_count" />
             </button>
           </group>
           <div>
             <h1>
-              <field class="mb16" name="name"/>
+              <field class="mb16" name="name" />
             </h1>
           </div>
           <notebook>
             <page string="Properties">
               <field name="property_ids">
                 <tree>
-                  <field name="name"/>
-                  <field name="expected_price"/>
-                  <field name="state"/>
+                  <field name="name" />
+                  <field name="expected_price" />
+                  <field name="state" />
                 </tree>
               </field>
             </page>
