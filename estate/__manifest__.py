@@ -11,6 +11,8 @@
         "views/estate_property_tag_views.xml",
         "views/res_users_view.xml",
         "views/estate_menus.xml",
+        "report/estate_reports.xml",
+        "report/estate_report_views.xml",
     ],
     "installable": True,
     "application": True,
